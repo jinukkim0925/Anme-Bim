@@ -26,9 +26,9 @@ import javax.swing.Timer;
 
 import aframe.aframe;
 
-public class Washing_trun_Bim_ending extends aframe {
+public class Washing_turn_Bim_ending extends aframe {
 
-	public Washing_trun_Bim_ending() {
+	public Washing_turn_Bim_ending() {
 		// TODO Auto-generated constructor stub
 		fs("©Ж╫лео ╬ь╣Ы");
 		
@@ -71,7 +71,7 @@ public class Washing_trun_Bim_ending extends aframe {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Washing_trun_Bim_ending();
+		new Washing_turn_Bim_ending();
 	}
 
 }

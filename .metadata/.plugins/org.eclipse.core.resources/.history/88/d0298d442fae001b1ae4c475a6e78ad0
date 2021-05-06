@@ -240,7 +240,7 @@ public class Washing_trun_Bim extends aframe {
 				if (a == JOptionPane.YES_OPTION) {
 					dispose();
 					tm.stop();
-					new Washing_trun_Bim_ending();
+					new Washing_turn_Bim_ending();
 				}
 				return;
 			}

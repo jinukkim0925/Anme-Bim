@@ -102,8 +102,7 @@ public class Setting extends aframe{
 				s = "©о╥А!";
 				imsg("©Ж╫лео╨Ж ╥н╣Ы ©о╥А!");
 				dispose();
-				new Washing_turn_Bim();
-//				new main();
+				new main();
 			}
 			float n2 = (float)sm/360*255;
 			col = new Color(0,0,(int)n2);

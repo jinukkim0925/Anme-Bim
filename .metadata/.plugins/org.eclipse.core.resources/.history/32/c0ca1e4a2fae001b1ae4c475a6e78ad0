@@ -29,7 +29,7 @@ import javax.swing.Timer;
 
 import aframe.aframe;
 
-public class Setting extends aframe{
+public class setting extends aframe{
 
 	int sm = 1;
 	JPanel jp,cp,np,sp,wp,ep,ap;
@@ -38,7 +38,7 @@ public class Setting extends aframe{
 	public TrayIcon t = new TrayIcon(im, "이거 누르면 안메",createpop());
 	public SystemTray st = SystemTray.getSystemTray();
 	
-	public Setting() {
+	public setting() {
 		// TODO Auto-generated constructor stub
 		fs("세팅");
 		
@@ -102,8 +102,7 @@ public class Setting extends aframe{
 				s = "완료!";
 				imsg("워싱턴빔 로딩 완료!");
 				dispose();
-				new Washing_turn_Bim();
-//				new main();
+				new main();
 			}
 			float n2 = (float)sm/360*255;
 			col = new Color(0,0,(int)n2);
@@ -161,7 +160,7 @@ public class Setting extends aframe{
 	});
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Setting();
+		new setting();
 	}
 
 }

@@ -1,0 +1,189 @@
+package form;
+
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.Timer;
+
+public class zz extends JFrame{
+
+	int sm = 1;
+	JPanel jp,cp,np,sp,wp,ep,ap;
+	ImageIcon ic = new ImageIcon(new ImageIcon("switch.jpg").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+	Image im = ic.getImage();
+	public TrayIcon t = new TrayIcon(im, "이거 누르면 안메",createpop());
+	public SystemTray st = SystemTray.getSystemTray();
+	
+	public zz() {
+		// TODO Auto-generated constructor stub
+		setTitle("세팅");
+		setDefaultCloseOperation(2);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				tm.stop();
+				System.exit(0);
+			}
+		});
+		try {
+			st.add(t);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		add(jp = new JPanel());
+		jp.setBackground(Color.white);
+		jp.setPreferredSize(new Dimension(300,300));
+		tm.start();
+		
+		t.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getButton() == 3) {
+//					JPopupMenu pop = new JPopupMenu();
+//					JMenuItem m1 = new JMenuItem("안호");
+//					JMenuItem m2 = new JMenuItem("안메");
+//					JMenuItem m3 = new JMenuItem("디지몬");
+//					JMenuItem m4 = new JMenuItem("워싱턴");
+					
+					
+				}
+			}
+		});
+		
+		pack();
+		setVisible(true);
+		setLocationRelativeTo(null);
+	}
+	public void imsg(String s) {
+		JOptionPane.showMessageDialog(null, s,"-안-",JOptionPane.INFORMATION_MESSAGE);
+	}
+	public PopupMenu createpop() {
+		PopupMenu pop = new PopupMenu();
+		MenuItem m1 = new MenuItem("안호");
+		MenuItem m2 = new MenuItem("안메");
+		MenuItem m3 = new MenuItem("디지몬");
+		MenuItem m4 = new MenuItem("워싱턴");
+		
+		pop.add(m1);
+		pop.addSeparator();
+		pop.add(m2);
+		pop.addSeparator();
+		pop.add(m3);
+		pop.addSeparator();
+		pop.add(m4);
+		
+		m1.addActionListener(e->{
+			imsg("안호는 덕현이를 정말좋아해!");
+		});
+		m2.addActionListener(e->{
+			imsg("안메는 종오를 정말 정말좋아해!");
+		});
+		m3.addActionListener(e->{
+			imsg("디지몬 진화!!!");
+		});
+		m4.addActionListener(e->{
+			imsg("워싱턴 빔!!!!!!!!!!!!!!!");
+		});
+		
+		return pop;
+	}
+	Color col = Color.red;
+	String s = "초기화 하는중",ss=".";
+	Timer tm = new Timer(5, new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if (sm<360) {
+				sm++;
+			}else {
+				tm.stop();
+				s = "완료!";
+				imsg("안메설치 완료!");
+			}
+			float n2 = (float)sm/360*255;
+			col = new Color(0,0,(int)n2);
+			ss = "";
+			for (int i = 0; i < sm%10; i++) {
+				ss = ss+"■";
+			}
+			try {
+				if (sm == 50) {
+					
+					tm.setDelay(40);
+					s = "기반 구축중";
+				}else if (sm == 150) {
+					tm.setDelay(10);
+					s = "기반 다지는중";
+				}else if (sm == 200) {
+					tm.setDelay(60);
+					s = "설치중";
+				}else if (sm == 280) {
+					tm.setDelay(20);
+					s = "업데이트중";
+				}else if (sm == 330) {
+					tm.setDelay(3);
+					s = "마무리하는중";
+				}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+			jp.removeAll();
+			float n = (float)sm/360*100;
+			jp.add(ap = new JPanel() {
+				protected void paintComponent(java.awt.Graphics g) {
+					g.setColor(col);
+					g.fillArc(20, 20, 260, 260, 90, -sm);
+					g.setColor(Color.white);
+					g.fillOval(50, 50, 200, 200);
+					Graphics2D g2 = (Graphics2D) g;
+					g2.setColor(Color.black);
+					g2.setFont(new Font("궁서",Font.BOLD,13));
+					g2.drawString(Math.round(n)+" % ("+s+")", 100, 150);
+					g.setColor(new Color(sm%10*20,sm%10*20,sm%10*20));
+					g.drawString(ss, 100, 170);
+				};
+			});
+			
+			
+			
+			ap.setBackground(Color.white);
+			ap.setPreferredSize(new Dimension(300,300));
+			
+			repaint();
+			revalidate();
+		}
+	});
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new zz();
+	}
+
+}

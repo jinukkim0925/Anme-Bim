@@ -1,0 +1,197 @@
+package form;
+
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class Washing_trun_Bim extends JFrame{
+
+	JPanel jp,cp,np,sp,wp,ep,ap;
+	Color col[] = {Color.red,Color.orange,Color.yellow, Color.green, Color.cyan,Color.blue,Color.pink,Color.magenta};
+	JButton jb[]= new JButton[5];
+	String s1[] = "빔 공격력 증가, 빔 속도 증가, 안호 강화, 재화력증가, 종료".split(", ");
+	DecimalFormat won = new DecimalFormat("#,###");
+	int lv1=0,lv2=0,lv3=0,lv4=0,pay1=1000,pay2=2000,pay3=2500,pay4=3000;
+	public Washing_trun_Bim() {
+		// TODO Auto-generated constructor stub
+		setTitle("워싱턴 빔");
+		setDefaultCloseOperation(2);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				tm.stop();
+				System.exit(0);
+			}
+		});
+		
+		add(cp = new JPanel(),BorderLayout.CENTER);
+		add(wp = new JPanel(),BorderLayout.WEST);
+		
+		add(sp = new JPanel(),BorderLayout.SOUTH);
+		for (int i = 0; i < jb.length; i++) {
+			sp.add(jb[i] = new JButton(s1[i]));
+			jb[i].setBackground(Color.white);
+			jb[i].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.black));
+			jb[i].setPreferredSize(new Dimension(100,30));
+		}
+		
+		cp.setBackground(Color.white);
+		cp.setPreferredSize(new Dimension(900,300));
+		
+		sp.setBackground(Color.white);
+		
+		cp.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				gold = gold+10000;
+			};
+		});
+		jb[0].addActionListener(e->{
+			if (lv1 == 80) {
+				imsg("최고레렙입니다.");
+				return;
+			}
+			System.out.println(((lv1%10)*1000+1000));
+			if (pay1 >gold) {
+				wmsg("골드가 부족합니다.");
+				return;
+			}
+			lv1++;
+			gold = gold - pay1;
+			if (lv1 % 10 == 0) {
+				pay1 = pay1+1000;
+				co++;
+			}
+		});
+		jb[1].addActionListener(e->{
+			if (pay2 >gold) {
+				wmsg("골드가 부족합니다.");
+				return;
+			}
+			if (speed == 1) {
+				wmsg("최고레벨을 달성했습니다.");
+				return;
+			}
+			speed--;
+			gold = gold - pay2;
+			pay2 = pay2+2000;
+			lv2 = 10-speed;
+			tm.setDelay(speed);
+			System.out.println(speed);
+		});
+		jb[2].addActionListener(e->{
+			
+		});
+		jb[3].addActionListener(e->{
+			
+		});
+		jb[4].addActionListener(e->{
+			int a = JOptionPane.showConfirmDialog(null, "워싱턴 빔 키우기를 종료하시겠습니까?","종료",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if ( a == JOptionPane.YES_OPTION) {
+				System.exit(0);
+			}
+			
+		});
+		
+		tm.start();
+		pack();
+		setVisible(true);
+		setLocationRelativeTo(null);
+	}
+	int w = 0,cnt=0,co=0,gold=0,money=500,speed = 10;
+	Timer tm = new Timer(100, new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			cp.removeAll();
+			
+			cp.add(ap = new JPanel() {
+				protected void paintComponent(java.awt.Graphics g) {
+					Graphics2D g2 = (Graphics2D) g;
+					g2.setStroke(new BasicStroke(5));
+					g2.setColor(Color.black);
+					g2.drawOval(50, 50, 50, 50);
+					g2.drawLine(75, 100, 75, 180);
+					g2.drawLine(75, 180, 50, 220);
+					g2.drawLine(75, 180, 100, 220);
+					//팔
+					g2.drawLine(75, 120, 120, 120);
+					g2.drawLine(75, 120, 120, 140);
+					
+					
+					
+					g2.setColor(Color.black);
+					g2.drawString("워싱턴 빔", w+60, 130);
+					g2.drawString("안메", 70, 240);
+					
+					g2.drawOval(750, 50, 50, 50);
+					g2.drawLine(775, 100, 775, 180);
+					g2.drawLine(775, 180, 750, 220);
+					g2.drawLine(775, 180, 800, 220);
+					//팔
+					g2.drawLine(775, 120, 820, 100);
+					g2.drawLine(775, 120, 720, 100);
+					g2.drawString("덕현", 750, 240);
+					
+					
+					g2.setColor(col[co]);
+					g2.fillRect(120, 110-lv1, w, 40+lv1*2);
+					
+					g2.setFont(new Font("",Font.BOLD,20));
+					
+					g2.drawString("골드 : "+won.format(gold), 300, 250);
+					
+					//빔
+					g2.drawString("lVl : "+lv1, 200, 290);
+					//속도
+					g2.drawString("lVl : "+lv2, 300, 290);
+					//개인
+					g2.drawString("lVl : "+lv3, 405, 290);
+					//재화
+					g2.drawString("lVl : "+lv4, 510, 290);
+				};
+			});
+			w++;
+			
+			ap.setPreferredSize(new Dimension(900,300));
+			
+			if (w == 600) {
+				gold = gold+money;
+				w = 0;
+			}
+			repaint();
+			revalidate();
+		}
+	});
+	
+	
+	public void imsg(String s) {
+		JOptionPane.showMessageDialog(null, s,"-안-",JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void wmsg(String s) {
+		JOptionPane.showMessageDialog(null, s,"-안-",JOptionPane.ERROR_MESSAGE);
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new Washing_trun_Bim();
+	}
+
+}
